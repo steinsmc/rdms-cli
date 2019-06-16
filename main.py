@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import websocket
+import json
 
 try:
     import thread
@@ -9,8 +10,19 @@ except ImportError:
 import time
 
 
+def empty(dictionry, key):
+    if key in dictionry:
+        if dictionry[key]:
+            return False
+    return True
+
+
 def on_message(ws, message):
-    print(message)
+    original = json.loads(message)
+    if empty(original['message'], 'data'):
+        print(original)
+    else:
+        print(original['message']['data'].replace('\\n', '\n'))
 
 
 def on_error(ws, error):
@@ -23,8 +35,8 @@ def on_close(ws):
 
 def on_open(ws):
     def run(*args):
-        ws.send('{"action":"register","message":{"api":1,"type":"rdms","password":"lixisgay"}}')
-        time.sleep(1)
+        ws.send('{"action":"register","message":{"api":1,"type":"rdms","password":"lixisverygay"}}')
+        time.sleep(10000)
         ws.close()
         print("thread terminating...")
 
