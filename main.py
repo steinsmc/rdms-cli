@@ -36,6 +36,8 @@ def on_close(ws):
 def on_open(ws):
     def run(*args):
         ws.send('{"action":"register","message":{"api":1,"type":"rdms","password":"lixisverygay"}}')
+        time.sleep(1)
+        ws.send('{"action":"rdms_command","message":{"api":1}}')
         time.sleep(10000)
         ws.close()
         print("thread terminating...")
@@ -46,7 +48,7 @@ def on_open(ws):
 if __name__ == "__main__":
     print("Amadues远程调试监控系统启动中...")
     websocket.enableTrace(True)
-    ws = websocket.WebSocketApp("ws://45.40.204.211:2333/",
+    ws = websocket.WebSocketApp("ws://111.231.138.146:2333/",
                                 on_message=on_message,
                                 on_error=on_error,
                                 on_close=on_close)
